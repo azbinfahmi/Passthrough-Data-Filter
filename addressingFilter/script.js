@@ -37,8 +37,6 @@ function parseCSV(csvText) {
         const unitNumberIndex = header.indexOf('Unit Number');
         const houseNumberIndex = header.indexOf('House Number');
 
-        console.log('cells[unitNumberIndex]: ',cells[unitNumberIndex])
-        console.log('cells[unitNumberIndex]: ',cells[houseNumberIndex])
         let unitNumber, houseNumber
         
         if(cells[unitNumberIndex] == undefined || cells[houseNumberIndex] == undefined){
@@ -100,18 +98,24 @@ function filterAndCreateSheets(csvData) {
     const customFileName = prompt("Enter the file name:") + " .xlsx";
     const fileName = customFileName ? customFileName : 'Addressing.xlsx';
 
-    // Initialize an array to store the overview data
-    const overviewData = [];
-
-    // Counter for numbering sheets
-    let sheetNumber = 1;
-
     // Convert data to sheet
-    const ws = XLSX.utils.json_to_sheet(csvData);
-
+    const ws = XLSX.utils.json_to_sheet(csvData.map(row => {
+        // Create a new object to hold the data for this row
+        const newRow = {};
+        
+        // Copy data from the original row
+        Object.keys(row).forEach(key => {
+            newRow[key] = row[key];
+        });
+        
+        // Add the Google Maps link as a hyperlink in the 'GoogleMaps' column
+        newRow['GoogleMaps'] = { f: `=HYPERLINK("${row['GoogleMaps']}","Go to Location")` };
+        
+        return newRow;
+    }));
     // Append the sheet to the workbook
     XLSX.utils.book_append_sheet(wb, ws, 'Addressing Data');
-
+    
     // Save the workbook to a file with the custom file name
     XLSX.writeFile(wb, fileName);
 }
