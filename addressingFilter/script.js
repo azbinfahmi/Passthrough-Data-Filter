@@ -31,8 +31,10 @@ function parseCSV(csvText) {
         const Xcoord = cells[XcoordIndex];
         
         // Construct Google Maps link using the coordinates from the current row
-        const Gmaps = `https://www.google.com/maps/@${Ycoord},${Xcoord},18z/data=!3m1!1e3?t=h`;
-        
+        //satellite 
+        const Gmaps = `https://www.google.com/maps/@?api=1&map_action=map&center=${Ycoord},${Xcoord}&zoom=18&basemap=satellite`;        //const Gmaps = `https://www.google.com/maps?q=${Ycoord},${Xcoord}`;
+
+
         // Extract "Unit Number" and "House Number" values and remove double quotes
         const unitNumberIndex = header.indexOf('Unit Number');
         const houseNumberIndex = header.indexOf('House Number');
