@@ -46,6 +46,7 @@ function parseCSV(csvText) {
             else{
                 houseNumber = cells[houseNumberIndex]
             }
+            
         }
 
         else{
@@ -63,7 +64,8 @@ function parseCSV(csvText) {
                 houseNumber = cells[houseNumberIndex]
             }
         }
-       
+        console.log('unitNumber: ',unitNumber)
+        console.log('houseNumber: ',houseNumber)
         // Return the parsed data object
         return {
             Y: Ycoord, 
@@ -72,8 +74,8 @@ function parseCSV(csvText) {
             v_layer: cells[header.indexOf('v_layer')],
             v_project: cells[header.indexOf('v_project')],
             ID: cells[header.indexOf('ID')],
-            'Unit Number': isNaN(unitNumber) ? null : unitNumber,
-            'House Number': isNaN(houseNumber) ? null : houseNumber,
+            'Unit Number': unitNumber,
+            'House Number': houseNumber,
             Street: cells[header.indexOf('Street')],
             City: cells[header.indexOf('City')],
             'Bldg Type Source': cells[header.indexOf('Bldg Type Source')],
